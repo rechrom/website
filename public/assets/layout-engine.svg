@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 710" role="img" aria-labelledby="layout-title layout-desc">
+  <title id="layout-title">HTML mutation, layout calculation, and updated rendering</title>
+  <desc id="layout-desc">A mutation enters HTML. The HTML changes, the LayoutNG symbol rotates to calculate layout, and the rendered page updates. This sequence repeats.</desc>
+  <style>
+    .mutation { animation: mutation-arrive 8s ease-in-out infinite; }
+    .html-lines { transform-origin: 133px 92px; animation: html-change 8s ease-in-out infinite; }
+    .html-new-line { opacity: 0; animation: html-line-appear 8s ease-in-out infinite; }
+    .html-card { animation: html-highlight 8s ease-in-out infinite; }
+    .engine-icon { transform-origin: 228px 269px; animation: engine-calculate 8s ease-in-out infinite; }
+    .engine-card { animation: engine-highlight 8s ease-in-out infinite; }
+    .render-before { animation: render-before 8s ease-in-out infinite; }
+    .render-after { opacity: 0; animation: render-after 8s ease-in-out infinite; }
+    @keyframes mutation-arrive {
+      0%, 5% { opacity: 0; transform: translateY(0); }
+      10% { opacity: 1; transform: translateY(0); }
+      23% { opacity: 1; transform: translateY(110px); }
+      28%, 100% { opacity: 0; transform: translateY(122px) scale(.96); }
+    }
+    @keyframes html-change {
+      0%, 27%, 96%, 100% { transform: scaleX(1); }
+      34%, 86% { transform: scaleX(1.16); }
+    }
+    @keyframes html-line-appear {
+      0%, 27%, 96%, 100% { opacity: 0; }
+      34%, 86% { opacity: 1; }
+    }
+    @keyframes html-highlight {
+      0%, 24%, 42%, 100% { fill: white; stroke: #9cc8cd; }
+      29%, 34% { fill: #e9f5f4; stroke: #15919d; }
+    }
+    @keyframes engine-calculate {
+      0%, 36% { transform: rotate(0); }
+      51%, 100% { transform: rotate(360deg); }
+    }
+    @keyframes engine-highlight {
+      0%, 35%, 57%, 100% { fill: white; }
+      40%, 49% { fill: #e9f5f4; }
+    }
+    @keyframes render-before {
+      0%, 53%, 96%, 100% { opacity: 1; }
+      62%, 86% { opacity: 0; }
+    }
+    @keyframes render-after {
+      0%, 53%, 96%, 100% { opacity: 0; }
+      62%, 86% { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .mutation, .html-new-line, .render-after { display: none; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M1 1L5.5 3.5L1 6" fill="none" stroke="#15919d" stroke-width="1.4"/></marker>
+  </defs>
+  <g transform="translate(0 60)">
+  <g fill="white" stroke="#9cc8cd" stroke-width="1.5">
+    <rect class="html-card" x="111" y="14" width="181" height="125" rx="5"/>
+    <rect x="348" y="14" width="181" height="125" rx="5"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#062142">
+    <text x="131" y="49">HTML</text><text x="368" y="49">CSS</text>
+  </g>
+  <g fill="none" stroke-width="5" stroke-linecap="round">
+    <g stroke="#062142"><path class="html-lines" d="M133 76H202M145 92H247M145 108H219"/><path class="html-new-line" d="M145 124H238"/></g>
+    <g stroke="#15919d"><path d="M370 76H438M382 92H481M382 108H457"/></g>
+  </g>
+  <g fill="none" stroke="#15919d" stroke-width="1.5">
+    <path d="M201 139V164Q201 176 213 176H427Q439 176 439 164V139"/>
+    <path d="M320 176V207" marker-end="url(#arrow)"/>
+  </g>
+  <rect class="engine-card" x="180" y="221" width="280" height="96" rx="5" fill="white" stroke="#15919d" stroke-width="1.6"/>
+  <g class="engine-icon" fill="none" stroke="#15919d" stroke-width="1.6">
+    <rect x="202" y="241" width="52" height="20" rx="2"/>
+    <rect x="202" y="270" width="20" height="26" rx="2"/>
+    <rect x="232" y="270" width="22" height="26" rx="2"/>
+  </g>
+  <text x="273" y="262" font-family="Arial,sans-serif" font-size="31" font-weight="700" letter-spacing="-1" fill="#062142">LayoutNG</text>
+  <text x="275" y="290" font-family="Arial,sans-serif" font-size="21" font-weight="600" fill="#15919d">Rust</text>
+  <path d="M320 317V355" fill="none" stroke="#15919d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="35" y="370" width="570" height="267" rx="5" fill="white" stroke="#062142" stroke-width="2"/>
+  <path d="M41 370H599Q605 370 605 376V394H35V376Q35 370 41 370" fill="#062142"/>
+  <g fill="#15919d"><circle cx="50" cy="382" r="3.5"/><circle cx="63" cy="382" r="3.5"/></g><circle cx="76" cy="382" r="3.5" fill="#dce9ea"/>
+  <rect x="115" y="378" width="258" height="8" rx="4" fill="#dce9ea"/>
+  <g class="render-before">
+  <g fill="none" stroke="#15919d" stroke-width="1.3">
+    <rect x="60" y="416" width="520" height="39" rx="2"/>
+    <rect x="60" y="471" width="336" height="74" rx="2"/>
+    <rect x="412" y="471" width="168" height="141" rx="2"/>
+    <rect x="60" y="561" width="104" height="51" rx="2"/>
+    <rect x="176" y="561" width="104" height="51" rx="2"/>
+    <rect x="292" y="561" width="104" height="51" rx="2"/>
+  </g>
+  <g fill="#e9f5f4"><rect x="63" y="474" width="330" height="68" rx="1"/><rect x="415" y="474" width="162" height="135" rx="1"/></g>
+  <g fill="#15919d"><rect x="75" y="429" width="35" height="12" rx="2"/><rect x="75" y="489" width="128" height="7" rx="3"/><rect x="75" y="505" width="203" height="5" rx="2"/><rect x="75" y="518" width="171" height="5" rx="2"/></g>
+  <g fill="#b9d9db"><rect x="432" y="488" width="130" height="60" rx="2"/><rect x="432" y="561" width="109" height="5" rx="2"/><rect x="432" y="575" width="127" height="5" rx="2"/><rect x="432" y="589" width="89" height="5" rx="2"/></g>
+  <g fill="#d9e5e6"><rect x="421" y="432" width="35" height="6" rx="3"/><rect x="470" y="432" width="35" height="6" rx="3"/><rect x="519" y="432" width="45" height="6" rx="3"/><rect x="75" y="578" width="70" height="5" rx="2"/><rect x="75" y="590" width="53" height="5" rx="2"/><rect x="191" y="578" width="70" height="5" rx="2"/><rect x="191" y="590" width="53" height="5" rx="2"/><rect x="307" y="578" width="70" height="5" rx="2"/><rect x="307" y="590" width="53" height="5" rx="2"/></g>
+  </g>
+  <g class="render-after">
+    <g fill="none" stroke="#15919d" stroke-width="1.3">
+      <rect x="60" y="416" width="520" height="39" rx="2"/>
+      <rect x="60" y="471" width="520" height="52" rx="2"/>
+      <rect x="60" y="539" width="156" height="73" rx="2"/>
+      <rect x="232" y="539" width="156" height="73" rx="2"/>
+      <rect x="404" y="539" width="176" height="73" rx="2"/>
+    </g>
+    <g fill="#e9f5f4">
+      <rect x="63" y="474" width="514" height="46" rx="1"/>
+      <rect x="407" y="542" width="170" height="67" rx="1"/>
+    </g>
+    <g fill="#15919d">
+      <rect x="75" y="429" width="35" height="12" rx="2"/>
+      <rect x="75" y="486" width="176" height="7" rx="3"/>
+      <rect x="75" y="503" width="264" height="5" rx="2"/>
+      <rect x="75" y="555" width="76" height="7" rx="3"/>
+      <rect x="247" y="555" width="76" height="7" rx="3"/>
+    </g>
+    <g fill="#b9d9db">
+      <rect x="421" y="554" width="141" height="32" rx="2"/>
+      <rect x="421" y="597" width="104" height="5" rx="2"/>
+    </g>
+    <g fill="#d9e5e6">
+      <rect x="421" y="432" width="35" height="6" rx="3"/>
+      <rect x="470" y="432" width="35" height="6" rx="3"/>
+      <rect x="519" y="432" width="45" height="6" rx="3"/>
+      <rect x="75" y="576" width="122" height="5" rx="2"/>
+      <rect x="75" y="590" width="95" height="5" rx="2"/>
+      <rect x="247" y="576" width="122" height="5" rx="2"/>
+      <rect x="247" y="590" width="95" height="5" rx="2"/>
+    </g>
+  </g>
+  </g>
+  <g class="mutation">
+    <rect x="127" y="6" width="148" height="38" rx="19" fill="#15919d"/>
+    <path d="M142 25H154M148 19V31" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <text x="163" y="31" font-family="Arial,sans-serif" font-size="21" font-weight="600" fill="white">mutation</text>
+  </g>
+</svg>

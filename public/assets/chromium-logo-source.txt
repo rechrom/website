@@ -1,0 +1,3 @@
+Chromium SVG asset
+Source: https://github.com/alrra/browser-logos/tree/main/src/chromium
+Downloaded without geometry/color edits from: https://raw.githubusercontent.com/alrra/browser-logos/main/src/chromium/chromium.svg
