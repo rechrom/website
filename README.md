@@ -19,17 +19,13 @@ Edit files in `public/`. The seven sections cover the engine, modular browser as
 
 Production branch: `main`. Deployment directory: `public/`. Cloudflare Pages project: `rechrom-website`, using Direct Upload, not Cloudflare's Git integration.
 
-1. Create the Pages project once in the intended Cloudflare account:
-
-   ```sh
-   npx wrangler@4.145.0 pages project create rechrom-website --production-branch main
-   ```
-
-2. Create a Cloudflare API token scoped to that account with **Account → Cloudflare Pages → Edit**.
-3. Add these repository **Actions secrets**:
+1. Create a Cloudflare API token scoped to the intended account with **Account → Cloudflare Pages → Edit**.
+2. Add these repository **Actions secrets** at [Settings → Secrets and variables → Actions](https://github.com/rechrom/website/settings/secrets/actions):
    - `CLOUDFLARE_ACCOUNT_ID`
    - `CLOUDFLARE_API_TOKEN`
-4. Push to `main` or manually run **Cloudflare Pages** in the Actions tab.
+3. Push to `main` or manually run **Cloudflare Pages** in the Actions tab.
+
+The first deployment automatically creates `rechrom-website` with production branch `main`. Subsequent deployments reuse it. An existing Git-integrated project or a different production branch is rejected without modifying its configuration.
 
 Pull requests run syntax and local asset checks without deployment credentials. Production deploys only after those checks pass. Action revisions and Wrangler are pinned. Only `public/` is uploaded; local previews, comparison images, repository files and credentials are excluded.
 

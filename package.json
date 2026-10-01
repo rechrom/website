@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "check": "node --check public/script.js && node scripts/check-site.mjs",
+    "check": "node --check public/script.js && node --check scripts/ensure-pages-project.mjs && node scripts/check-site.mjs",
     "dev": "python3 -m http.server 4317 --directory public"
   },
   "engines": { "node": ">=22" }
