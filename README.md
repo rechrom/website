@@ -2,7 +2,9 @@
 
 Official Rechrom landing page. Static HTML, CSS, SVG and JavaScript.
 
-Live site: https://rechrom-website.pages.dev/
+Live site: https://rechrom.dev/
+
+Cloudflare Pages fallback: https://rechrom-website.pages.dev/
 
 Production is hosted on Cloudflare Pages. The GitHub Actions workflow requires the two deployment secrets described below.
 
@@ -33,17 +35,19 @@ The first deployment automatically creates `rechrom-website` with production bra
 
 Pull requests run syntax and local asset checks without deployment credentials. Production deploys only after those checks pass. Action revisions and Wrangler are pinned. Only `public/` is uploaded; local previews, comparison images, repository files and credentials are excluded.
 
-Cloudflare's [Direct Upload CI guide](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/) describes the deployment method and token permissions. Custom domains can be connected later in Pages settings.
+Cloudflare's [Direct Upload CI guide](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/) describes the deployment method and token permissions. Custom domains are configured separately from deployment.
 
 ## Custom domains
 
 Intended primary domain: `rechrom.dev`. Redirect domain: `rechrom.com`.
 
-Both domains have been added to the Pages project, but DNS validation is still pending. Their current authoritative DNS providers are Namecheap (`rechrom.dev`) and Alibaba Cloud (`rechrom.com`). Apex domains must be added as Cloudflare zones in the Pages account, and their registrar nameservers must be changed to the nameservers assigned to each zone. Preserve existing DNS records when moving providers.
+Both domains are attached to the Pages project and have Cloudflare Free DNS zones. Namecheap remains the registrar for `rechrom.dev`; Alibaba Cloud remains the registrar for `rechrom.com`. Both registrars now use `jeff.ns.cloudflare.com` and `natasha.ns.cloudflare.com`, as independently assigned to these two zones. The original Namecheap MX and SPF records were preserved. The original Alibaba Cloud DNS zone had no records.
 
-Once the zones are available, configure a proxied apex CNAME to `rechrom-website.pages.dev` and wait for Pages domain validation and TLS to activate. On the `rechrom.com` zone, add the rule in `ops/rechrom-com-redirect.json` to the `http_request_dynamic_redirect` phase. The 301 redirect preserves the URL path and query string. If that phase already has a ruleset, append the rule without replacing unrelated rules.
+Each apex has a proxied CNAME to `rechrom-website.pages.dev`. The `rechrom.com` zone has an active rule named **Rechrom canonical domain redirect**, matching the specification in `ops/rechrom-com-redirect.json` in the `http_request_dynamic_redirect` phase. It redirects to `https://rechrom.dev`, preserving the URL path and query string. Existing unrelated rules must be preserved when changing this configuration.
 
-The custom-domain setup is separate from ordinary Actions deployment. Keep the deployment token scoped to Pages. A temporary setup token requires Zone Edit, DNS Edit and Dynamic URL Redirects Edit permissions; `.cloudflare-domain-token` is gitignored. DNS and redirects have **not** yet been configured or verified.
+The custom-domain setup is separate from ordinary Actions deployment. Keep the deployment token scoped to Pages; DNS and redirect configuration was completed through the Cloudflare and registrar dashboards. `.cloudflare-domain-token` is gitignored and is not required for routine deployment.
+
+Verification on October 1, 2026: both registrars saved the new nameservers, both Pages custom domains are active, and `https://rechrom.dev/` returns 200 with valid HTTPS. The `.com` HTTPS edge returns 301 with the original path and query string when tested using its current public DNS addresses. Cloudflare DNS resolves both domains; some local resolvers still have the previous `.com` negative DNS response cached. The Pages fallback remains available while those caches update.
 
 ## Site links
 
