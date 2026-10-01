@@ -1,6 +1,10 @@
 # Rechrom website
 
-Official Rechrom landing page. Static HTML, CSS, SVG and JavaScript, deployed to Cloudflare Pages by GitHub Actions.
+Official Rechrom landing page. Static HTML, CSS, SVG and JavaScript.
+
+Live site: https://rechrom-website.pages.dev/
+
+Production is hosted on Cloudflare Pages. The GitHub Actions workflow requires the two deployment secrets described below.
 
 ## Development
 
