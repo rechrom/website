@@ -35,6 +35,16 @@ Pull requests run syntax and local asset checks without deployment credentials. 
 
 Cloudflare's [Direct Upload CI guide](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/) describes the deployment method and token permissions. Custom domains can be connected later in Pages settings.
 
+## Custom domains
+
+Intended primary domain: `rechrom.dev`. Redirect domain: `rechrom.com`.
+
+Both domains have been added to the Pages project, but DNS validation is still pending. Their current authoritative DNS providers are Namecheap (`rechrom.dev`) and Alibaba Cloud (`rechrom.com`). Apex domains must be added as Cloudflare zones in the Pages account, and their registrar nameservers must be changed to the nameservers assigned to each zone. Preserve existing DNS records when moving providers.
+
+Once the zones are available, configure a proxied apex CNAME to `rechrom-website.pages.dev` and wait for Pages domain validation and TLS to activate. On the `rechrom.com` zone, add the rule in `ops/rechrom-com-redirect.json` to the `http_request_dynamic_redirect` phase. The 301 redirect preserves the URL path and query string. If that phase already has a ruleset, append the rule without replacing unrelated rules.
+
+The custom-domain setup is separate from ordinary Actions deployment. Keep the deployment token scoped to Pages. A temporary setup token requires Zone Edit, DNS Edit and Dynamic URL Redirects Edit permissions; `.cloudflare-domain-token` is gitignored. DNS and redirects have **not** yet been configured or verified.
+
 ## Site links
 
 The GitHub links point to the Rechrom organization. Docs and the Reon app framework entry remain marked as coming soon until their sites exist.

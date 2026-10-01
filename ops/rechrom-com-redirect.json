@@ -1,0 +1,23 @@
+{
+  "name": "Rechrom canonical domain redirect",
+  "kind": "zone",
+  "phase": "http_request_dynamic_redirect",
+  "rules": [
+    {
+      "ref": "rechrom_com_to_dev",
+      "expression": "(http.host eq \"rechrom.com\")",
+      "description": "Redirect rechrom.com to rechrom.dev while preserving the path and query string.",
+      "action": "redirect",
+      "action_parameters": {
+        "from_value": {
+          "target_url": {
+            "expression": "concat(\"https://rechrom.dev\", http.request.uri.path)"
+          },
+          "status_code": 301,
+          "preserve_query_string": true
+        }
+      },
+      "enabled": true
+    }
+  ]
+}
